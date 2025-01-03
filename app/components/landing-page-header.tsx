@@ -55,20 +55,28 @@ export default function LandingPageHeader() {
     <header className="fixed w-full z-50 bg-white shadow-md">
       <div className="container mx-auto flex justify-between items-center px-4 py-4">
         <div className="text-xl font-bold">Noha.AI</div>
-        <DesktopItems
-          items={[
-            { title: "Home", href: "#" },
-            { title: "Product", href: "#product" },
-            { title: "About", href: "#about" },
-          ]}
-        />
+        <div className="hidden md:flex space-x-6">
+          <Link href="/" className="text-lg font-medium hover:text-gray-800">
+            Home
+          </Link>
+          <Link href="#product" className="text-lg font-medium hover:text-gray-800">
+            Product
+          </Link>
+          <Link href="#about" className="text-lg font-medium hover:text-gray-800">
+            About
+          </Link>
+        </div>
         <div className="flex items-center space-x-4">
-          <button className="hidden md:block px-4 py-2 bg-black text-white text-lg font-small rounded-lg">
-            Login
-          </button>
-          <button className="hidden md:block px-4 py-2 bg-black text-white text-lg font-small rounded-lg">
-            Signup
-          </button>
+          <Link href="/login">
+            <button className="hidden md:block px-4 py-2 bg-black text-white text-lg font-small rounded-lg">
+              Login
+            </button>
+          </Link>
+          <Link href="/signup">
+            <button className="hidden md:block px-4 py-2 bg-black text-white text-lg font-small rounded-lg">
+              Signup
+            </button>
+          </Link>
           <button
             onClick={() => setShowMobileMenu(!showMobileMenu)}
             className="md:hidden"
@@ -78,7 +86,7 @@ export default function LandingPageHeader() {
         {showMobileMenu && (
           <MobileItems
             items={[
-              { title: "Home", href: "#" },
+              { title: "Home", href: "/" },
               { title: "Product", href: "#product" },
               { title: "About", href: "#about" },
             ]}
