@@ -21,6 +21,33 @@ def home():
         return jsonify({"message": f"Welcome {session['username']}!"}), 200
     return jsonify({"message": "Please log in."}), 200
 
+
+@app.route('/create_meeting', methods=['POST'])
+def create_meeting():
+    if 'username' not in session:
+        return jsonify({"error": "Unauthorized access"}), 401
+
+    data = request.json
+    title = data.get('title')
+    meeting_time = data.get('meeting_time')  # Expected format: "YYYY-MM-DD HH:MM:SS"
+
+    if not title or not meeting_time:
+        return jsonify({"error": "Title and meeting time are required"}), 400
+
+    try:
+        meeting_time = datetime.strptime(meeting_time, "%Y-%m-%d %H:%M:%S")
+    except ValueError:
+        return jsonify({"error": "Invalid meeting time format. Use 'YYYY-MM-DD HH:MM:SS'"}), 400
+
+    # Insert the meeting into the collection
+    meetings_collection.insert_one({
+        'username': session['username'],
+        'title': title,
+        'meeting_time': meeting_time
+    })
+
+    return jsonify({"message": "Meeting created successfully!"}), 201
+
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.json
@@ -79,31 +106,7 @@ def dashboard():
         } for meeting in meetings]
     }), 200
 
-@app.route('/create_meeting', methods=['POST'])
-def create_meeting():
-    if 'username' not in session:
-        return jsonify({"error": "Unauthorized access"}), 401
 
-    data = request.json
-    title = data.get('title')
-    meeting_time = data.get('meeting_time')  # Expected format: "YYYY-MM-DD HH:MM:SS"
-
-    if not title or not meeting_time:
-        return jsonify({"error": "Title and meeting time are required"}), 400
-
-    try:
-        meeting_time = datetime.strptime(meeting_time, "%Y-%m-%d %H:%M:%S")
-    except ValueError:
-        return jsonify({"error": "Invalid meeting time format. Use 'YYYY-MM-DD HH:MM:SS'"}), 400
-
-    # Insert the meeting into the collection
-    meetings_collection.insert_one({
-        'username': session['username'],
-        'title': title,
-        'meeting_time': meeting_time
-    })
-
-    return jsonify({"message": "Meeting created successfully!"}), 201
 
 @app.route('/logout', methods=['POST'])
 def logout():
