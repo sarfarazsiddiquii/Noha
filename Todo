@@ -1,1 +1,11 @@
-todo
+## todo
+
+docker
+more test files
+admin user to create meatings
+maybe nextauth possibility: only admin user can see /admindashboard where he can create 
+meetings/ alternative.
+
+
+in backed:
+can add crewai + serper (optional)
