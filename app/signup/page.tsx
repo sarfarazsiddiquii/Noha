@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import LandingPageHeader from '../components/landing-page-header';
+import PlainHeader from '../components/PlainHeader';
 
 export default function SignupPage() {
     const [username, setUsername] = useState('');
@@ -31,38 +31,46 @@ export default function SignupPage() {
     };
 
     return (
-        <div>
-            <LandingPageHeader />
-            <div className="container mx-auto py-16 flex justify-center">
+        <div suppressHydrationWarning>
+            <PlainHeader />
+            <div className="flex items-center justify-center min-h-screen bg-gray-50">
                 <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
                     <h2 className="text-2xl font-bold mb-6 text-center">Signup</h2>
-                    {error && <p className="text-red-500 mb-4">{error}</p>}
+                    {error && (
+                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                            {error}
+                        </div>
+                    )}
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">
-                            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+                            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                                Username
+                            </label>
                             <input
                                 id="username"
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
-                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 required
                             />
                         </div>
-                        <div className="mb-4">
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+                        <div className="mb-6">
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                                Password
+                            </label>
                             <input
                                 id="password"
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 required
                             />
                         </div>
                         <button
                             type="submit"
-                            className="w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                            className="w-full px-4 py-2 bg-black text-white font-medium text-sm rounded-md hover:bg-gray-800"
                         >
                             Signup
                         </button>

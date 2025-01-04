@@ -4,18 +4,18 @@ export default function Features() {
             title: "Quality - Set your bar & we do the rest",
             description:
                 "Noha.ai evaluates candidates according to the company’s established standards, with depth levels adjustable to meet specific requirements.",
-            image: "/ai-interview.jpeg",
+            image: "/images/feature-1.jpg",
         },
         {
             title: "Zero Bias - Unbiased Candidate Evaluation",
             description: "Noha.ai ensures an impartial assessment of candidates.",
-            image: "/zero-bias.jpeg",
+            image: "/images/feature-2.jpg",
         },
         {
             title: "In-Depth Analytics",
             description:
                 "Noha.ai offers detailed analytics on candidate performance during interviews, empowering hiring managers to make informed decisions.",
-            image: "/analytics.jpeg",
+            image: "/images/feature-3.jpg",
         },
     ];
 
@@ -33,7 +33,7 @@ export default function Features() {
                         <img
                             src={feature.image}
                             alt={feature.title}
-                            className="w-32 h-32 object-cover rounded-full mb-6"
+                            className="w-55 h-55 object-cover rounded-full mb-6"
                         />
                         <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
                         <p className="text-gray-600">{feature.description}</p>

@@ -3,38 +3,38 @@ export default function UseCases() {
       {
         title: "How Noha helps to increase efficiency in campus interviews",
         buttonText: "Know More",
-        link: "#",
-        image: "image1.jpg",
+        link: "https://www.youtube.com/watch?v=5EOMyIaOY1I&feature=youtu.be",
+        image: "/images/use1.jpg",
         alt: "image 1"
       },
       {
         title:
           "How Noha helps start-ups & midsize technology companies to hire their top talent",
         buttonText: "Know More",
-        link: "#",
-        image: "image2.jpg",
+        link: "https://youtu.be/yVpBXtcJ1Lk",
+        image: "/images/use2.jpg",
         alt: "image 2"
       },
       {
         title:
           "How Noha helps to conduct bulk interviews seamlessly for technology service organizations?",
         buttonText: "Know More",
-        link: "#",
-        image: "image3.jpg",
+        link: "https://youtu.be/TNaK-WiTf7M",
+        image: "/images/use3.jpg",
         alt: "image 3"
       },
       {
         title:
           "How Noha helps to conduct interview drives for technology product organizations?",
         buttonText: "Know More",
-        link: "#",
-        image: "image4.jpg",
+        link: "https://youtu.be/qhZc2VUf3Ts",
+        image: "/images/use4.jpg",
         alt: "image 4"
       },
     ];
   
     return (
-      <section id="use-cases" className="py-16 bg-gray-50">
+      <section id="use-cases" className="py-10 bg-gray-50"> 
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold">Use Cases of Noha.ai</h2>

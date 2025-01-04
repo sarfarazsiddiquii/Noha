@@ -1,6 +1,7 @@
 'use client';
 import React, { useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import PlainHeader from '../components/PlainHeader';
 
 interface Meeting {
   id: string;
@@ -13,25 +14,21 @@ export default function DashboardPage() {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [userName, setUserName] = useState<string>('User');
   const router = useRouter();
-  const meetRef = useRef(null);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        console.log('Fetching dashboard data...'); // For debugging
         const response = await fetch('http://localhost:5000/dashboard', {
           method: 'GET',
-          credentials: 'include', // This is crucial for sending cookies
+          credentials: 'include',
           headers: {
-            'Accept': 'application/json',
+            Accept: 'application/json',
           },
         });
 
-        console.log('Response status:', response.status); // For debugging
-
         if (response.status === 401) {
-          console.log('Unauthorized, redirecting to login...'); // For debugging
           router.push('/login');
           return;
         }
@@ -41,10 +38,9 @@ export default function DashboardPage() {
         }
 
         const data = await response.json();
-        console.log('Dashboard data:', data); // For debugging
         setMeetings(data.meetings || []);
+        setUserName(data.username || 'User'); 
       } catch (err) {
-        console.error('Dashboard error:', err);
         setError('Failed to load dashboard data');
       } finally {
         setLoading(false);
@@ -56,39 +52,54 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-16 px-4">
-        <div className="text-center">Loading...</div>
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="text-center text-lg font-semibold text-gray-600">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-16">
-      <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+    <>
+      <PlainHeader />
+      <div className="container mx-auto py-20 px-14">
+      <div className="bg-black text-white rounded-lg p-10 shadow-lg mb-12">
+        <h1 className="text-4xl font-bold">Welcome, {userName} 👋</h1>
+        <p className="mt-2 text-lg">Here’s a quick look at your upcoming meetings:</p>
+      </div>
 
-      {error && <p className="text-red-500 mb-4">{error}</p>}
+      {error && <p className="text-red-500 mb-6">{error}</p>}
 
       {meetings.length > 0 ? (
-        <div className="space-y-4">
-          {meetings.map((meeting) => (
-            <div key={meeting.id} className="p-4 bg-white rounded shadow-md">
-              <h2 className="text-xl font-semibold">{meeting.title}</h2>
-              <p className="text-gray-600">{meeting.time}</p>
-              <div className="TN bzz aHS-YH" style={{ marginLeft: '0px' }}>
-                <div className="qj qr"></div>
-                <div className="aio UKr6le">
-                  <span className="nU false">
-                    <a href="https://meet.google.com/new?hs=180&amp;authuser=0" target="_top" className="J-Ke n0" title="Start a meeting" aria-label="Start a meeting" draggable="false">Start a meeting</a>
-                  </span>
-                </div>
-                <div className="nL aif"></div>
-              </div>
-            </div>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {meetings.map((meeting) => (
+          <div
+          key={meeting.id}
+          className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 mb-8"
+          >
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">{meeting.title}</h2>
+          <p className="text-gray-600 mb-4">{meeting.time}</p>
+          {meeting.description && (
+            <p className="text-gray-500 mb-4">{meeting.description}</p>
+          )}
+          <a
+            href="https://meet.google.com/new?hs=180&amp;authuser=0"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-block px-4 py-2 bg-black text-white font-medium text-sm rounded-md hover:bg-gray-800 shadow-md transition"
+          >
+            Start Meeting
+          </a>
+          </div>
+        ))}
         </div>
       ) : (
-        <p>No upcoming meetings. <a href="/create-meeting" className="text-blue-500">Create one here.</a></p>
+        <div className="flex flex-col items-center bg-gray-50 p-8 rounded-lg shadow-md border border-gray-200">
+        <p className="text-gray-600 text-lg mb-4">
+          No upcoming meetings.{' '}
+        </p>
+        </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }

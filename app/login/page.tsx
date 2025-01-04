@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import LandingPageHeader from '../components/landing-page-header';
+import PlainHeader from '../components/PlainHeader';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
@@ -36,9 +36,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
-      <LandingPageHeader />
-      <div className="container mx-auto py-16 flex justify-center">
+    <div suppressHydrationWarning>
+      <PlainHeader />
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
           {error && (
@@ -75,7 +75,7 @@ export default function LoginPage() {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="w-full px-4 py-2 bg-black text-white font-medium text-sm rounded-md hover:bg-gray-800"
             >
               Login
             </button>

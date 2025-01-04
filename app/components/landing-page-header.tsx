@@ -68,12 +68,12 @@ export default function LandingPageHeader() {
         </div>
         <div className="flex items-center space-x-4">
           <Link href="/login">
-            <button className="hidden md:block px-4 py-2 bg-black text-white text-lg font-small rounded-lg">
+            <button className="hidden md:block px-4 py-1 bg-black text-white text-lg font-small rounded-lg">
               Login
             </button>
           </Link>
           <Link href="/signup">
-            <button className="hidden md:block px-4 py-2 bg-black text-white text-lg font-small rounded-lg">
+            <button className="hidden md:block px-4 py-1 bg-black text-white text-lg font-small rounded-lg">
               Signup
             </button>
           </Link>
