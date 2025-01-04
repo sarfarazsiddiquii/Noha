@@ -1,6 +1,8 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from config import Config
+from datetime import timedelta
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -32,18 +34,22 @@ def login():
 
     user = Config.users_collection.find_one({'username': username})
     if user and check_password_hash(user['password'], password):
-        session.permanent = True
-        session['username'] = username
+        # Generate JWT token
+        access_token = create_access_token(identity=username, expires_delta=timedelta(hours=1))
         return jsonify({
             "message": f"Welcome {username}!",
-            "username": username
+            "access_token": access_token
         }), 200
 
     return jsonify({"error": "Invalid credentials"}), 401
 
 @auth_bp.route('/logout', methods=['POST'])
+@jwt_required()
 def logout():
-    if 'username' in session:
-        session.pop('username')
-        return jsonify({"message": "Logged out successfully!"}), 200
-    return jsonify({"error": "You are not logged in"}), 400
+    return jsonify({"message": "Logged out successfully!"}), 200
+
+@auth_bp.route('/profile', methods=['GET'])
+@jwt_required()
+def profile():
+    current_user = get_jwt_identity()
+    return jsonify({"username": current_user}), 200
