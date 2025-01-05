@@ -80,6 +80,12 @@ export default function DashboardPage() {
               <div key={meeting.id} className="p-6 bg-white rounded-lg shadow-md">
                 <h2 className="text-xl font-semibold">{meeting.title}</h2>
                 <p>{meeting.time}</p>
+                <button
+                className="mt-4 ml-2 px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
+                onClick={() => window.open('https://meet.google.com/new', '_blank')}
+                >
+                Join Meet
+                </button>
               </div>
             ))}
           </div>
