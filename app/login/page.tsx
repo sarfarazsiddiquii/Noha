@@ -17,16 +17,17 @@ export default function LoginPage() {
         headers: { 
           'Content-Type': 'application/json',
         },
-        credentials: 'include', // This is crucial for handling cookies
         body: JSON.stringify({ username, password }),
       });
       
       const data = await response.json();
 
       if (response.ok) {
-        console.log('Login successful:', data); // For debugging
+        console.log('Login successful:', data);
+        localStorage.setItem('jwtToken', data.access_token);
         router.push('/dashboard');
       } else {
+        console.error('Error Response:', data);
         setError(data.error || 'Login failed');
       }
     } catch (err) {
@@ -36,7 +37,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div suppressHydrationWarning>
+    <div>
       <PlainHeader />
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
